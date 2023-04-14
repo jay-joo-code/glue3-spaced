@@ -14,7 +14,7 @@
 	<RadialGradient placement="left" />
 	<div class="relative z-10 px-6 py-16 lg:py-28">
 		<h2
-			class="tracking-snug  text-center text-4xl font-black leading-snug sm:text-5xl sm:leading-snug md:text-6xl md:leading-snug lg:text-7xl lg:leading-tight"
+			class="tracking-snug text-center text-4xl font-black leading-tight sm:text-5xl sm:leading-snug md:text-6xl md:leading-snug lg:text-7xl lg:leading-tight"
 		>
 			<span>{heroTopLine}</span>
 			<br class="hidden sm:block" />
