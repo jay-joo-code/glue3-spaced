@@ -4,8 +4,7 @@
 
 	export let overline: string = 'Our mission';
 	export let heading: string = 'Give your schedulers a calendar not a list';
-	export let desc: string =
-		'I’ve written on why traditional “semantic class names” are the reason CSS is hard to maintain, but the truth is you’re never going to believe me until you actually try it. If you can suppress the urge to retch long enough to give it a chance, I really think you’ll wonder how you ever worked with CSS any other way.';
+	export let desc: string = '';
 	export let linkLabel: string = '';
 	export let linkHref: string = '';
 </script>

@@ -2,6 +2,7 @@
 	import IconFolder from '$lib/icons/glue/IconFolder.svelte';
 	import IconKey from '$lib/icons/glue/IconKey.svelte';
 
+	export let heading = 'Build faster and focus on products';
 	export let features = [
 		{
 			icon: IconFolder,
@@ -30,7 +31,7 @@
 	class="container relative mx-auto max-w-7xl space-y-16 px-6 py-16 pb-0 sm:py-18 md:py-24 lg:px-16 lg:py-24 xl:px-20"
 >
 	<h3 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-		Build faster and focus on&nbsp;products
+		{heading}
 	</h3>
 	<dl
 		class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 md:grid-cols-2 md:gap-16 lg:grid-cols-4 lg:gap-x-8 xl:gap-x-8"
