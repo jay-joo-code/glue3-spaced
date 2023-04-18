@@ -7,6 +7,7 @@
 	export let descTopLine =
 		'You’ll love it for the advanced features to keep you in control of your calendar.';
 	export let descBottomLine = '';
+	export let href = '';
 </script>
 
 <div class="relative mx-auto w-full">
@@ -29,10 +30,14 @@
 				<span>{descBottomLine}</span>
 			{/if}
 		</p>
-		<div class="mt-8 flex justify-center">
-			<button class="btn-primary btn gap-2 rounded-full px-10 pr-8"
-				>Get started<span class="text-2xl"><IconRightArrowLong /></span></button
-			>
-		</div>
+		{#if href}
+			<div class="mt-8 flex justify-center">
+				<a {href}>
+					<button class="btn-primary btn gap-2 rounded-full px-10 pr-8"
+						>Get started<span class="text-2xl"><IconRightArrowLong /></span></button
+					>
+				</a>
+			</div>
+		{/if}
 	</div>
 </div>
