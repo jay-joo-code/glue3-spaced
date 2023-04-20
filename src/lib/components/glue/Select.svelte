@@ -6,10 +6,10 @@
 		placeholder?: string;
 		options: { value: string; label: string }[];
 	}
-	export let label: string;
-	export let value: string;
-	export let placeholder: string;
-	export let error: string;
+	export let label: string = '';
+	export let value: string = '';
+	export let placeholder: string = '';
+	export let error: string = '';
 	export let options: { value: string; label: string }[] = [];
 </script>
 
