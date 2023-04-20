@@ -4,6 +4,7 @@
 	export let title = '';
 	export let layout: 'mobile-only' | 'aside-main' = 'mobile-only';
 	export let noPadding = false;
+	export let limitWidth = false;
 </script>
 
 <svelte:head>
@@ -17,7 +18,12 @@
 	</div>
 {:else if layout === 'aside-main'}
 	<!-- aside main layout: should only have 2 top level children -->
-	<div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-		<slot />
+	<div class="w-full {limitWidth && 'flex justify-center'}">
+		<div
+			class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 {limitWidth &&
+				'w-full max-w-6xl'}"
+		>
+			<slot />
+		</div>
 	</div>
 {/if}
