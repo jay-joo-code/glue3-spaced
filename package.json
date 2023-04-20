@@ -47,7 +47,7 @@
 		"@zerodevx/svelte-toast": "^0.9.3",
 		"axios": "^1.2.2",
 		"cheerio": "^1.0.0-rc.12",
-		"daisyui": "^2.46.0",
+		"daisyui": "^2.51.5",
 		"date-fns": "^2.29.3",
 		"date-picker-svelte": "^2.2.5",
 		"highlight-words": "^1.2.1",
