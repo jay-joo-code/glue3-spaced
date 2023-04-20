@@ -11,7 +11,7 @@
 	export let error: string = '';
 </script>
 
-<div class="{$$props.class} form-control w-full">
+<div class="form-control w-full">
 	{#if label}
 		<label class="label">
 			<span class="label-text text-base-content/80">{label}</span>
@@ -35,7 +35,7 @@
 		type="text"
 		{...$$restProps}
 		{name}
-		class={`input-bordered input w-full ${error && 'input-error'}`}
+		class="{$$props.class} input-bordered input w-full ${error && 'input-error'}"
 	/>
 	{#if error}
 		<label class="label">
