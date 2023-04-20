@@ -3,10 +3,13 @@
 	interface $$Props extends HTMLSelectAttributes {
 		label?: string;
 		error?: string;
+		placeholder?: string;
+		options: { value: string; label: string }[];
 	}
-	export let label: string = '';
-	export let value: string = '';
-	export let error: string = '';
+	export let label: string;
+	export let value: string;
+	export let placeholder: string;
+	export let error: string;
 	export let options: { value: string; label: string }[] = [];
 </script>
 
@@ -34,6 +37,7 @@
 		{...$$restProps}
 		class={`select-bordered select w-full max-w-xs ${error && 'input-error'}`}
 	>
+		<option selected disabled>{placeholder}</option>
 		{#each options as { value, label }}
 			<option {value}>{label}</option>
 		{/each}
