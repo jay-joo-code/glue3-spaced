@@ -5,6 +5,7 @@
 	import { supabase } from '$lib/glue/supabaseClient';
 	import IconGoogle from '$lib/icons/glue/IconGoogle.svelte';
 	import IconLogout from '$lib/icons/glue/IconLogout.svelte';
+	import IconPerson from '$lib/icons/glue/IconPerson.svelte';
 
 	let email: string;
 	let password: string;
@@ -75,6 +76,8 @@
 		magicLinkState = 'sent';
 		isAuthLoading = false;
 	}
+
+	console.log('$page?.data?.session', $page?.data?.session);
 </script>
 
 {#if $page?.data?.session}
@@ -87,9 +90,13 @@
 				>
 					{#if $page?.data?.session?.user?.user_metadata?.avatar_url}
 						<img src={$page?.data?.session?.user?.user_metadata?.avatar_url} />
-					{:else}
+					{:else if $page?.data?.session?.user?.user_metadata?.name}
 						<span class="text-sm">{$page?.data?.session?.user?.user_metadata?.name?.charAt(0)}</span
 						>
+					{:else}
+						<div class="text-xl">
+							<IconPerson />
+						</div>
 					{/if}
 				</div>
 			</div>
