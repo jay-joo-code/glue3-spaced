@@ -5,7 +5,14 @@
 	import { supabase } from '$lib/glue/supabaseClient';
 	import IconGoogle from '$lib/icons/glue/IconGoogle.svelte';
 	import IconLogout from '$lib/icons/glue/IconLogout.svelte';
-	import IconMessage from '$lib/icons/glue/IconMessage.svelte';
+
+	let email: string;
+	let password: string;
+	let authError: string;
+	let state: 'signin' | 'register' = 'signin';
+	let authMethod: 'magic-link' | 'email' | 'google' = 'magic-link';
+	let magicLinkState: 'sent' | 'not-sent' = 'not-sent';
+	let isAuthLoading = false;
 
 	const signInWithGoogle = async () => {
 		await supabase.auth.signInWithOAuth({
@@ -18,16 +25,10 @@
 		goto('/');
 	};
 
-	let state: 'signin' | 'register' = 'register';
-
 	const toggleState = () => {
 		if (state === 'signin') state = 'register';
 		else state = 'signin';
 	};
-
-	let email: string;
-	let password: string;
-	let authError: string;
 
 	const signUpEmailPwd = async () => {
 		let { data, error } = await supabase.auth.signUp({
@@ -62,6 +63,18 @@
 			loginEmailPwd();
 		}
 	};
+
+	async function signInEmailMagicLink() {
+		isAuthLoading = true;
+		const { data, error } = await supabase.auth.signInWithOtp({
+			email,
+			options: {
+				emailRedirectTo: `${window.location.origin}/magic-link-redirect`
+			}
+		});
+		magicLinkState = 'sent';
+		isAuthLoading = false;
+	}
 </script>
 
 {#if $page?.data?.session}
@@ -127,11 +140,42 @@
 							? 'Cornell email'
 							: 'Google'}</button
 					>
-				{:else}
+				{:else if authMethod === 'magic-link'}
+					{#if magicLinkState === 'not-sent'}
+						<form class="pb-4" on:submit={signInEmailMagicLink}>
+							<h3 class="p-0 text-xl font-bold">Get started with {APP_NAME}</h3>
+							<div class="form-control mt-6">
+								<label class="label font-medium text-base-content/70" for="email">Email</label>
+								<input
+									class="input-bordered input w-full max-w-xs"
+									placeholder="Your school email"
+									type="email"
+									name="email"
+									required
+									bind:value={email}
+								/>
+							</div>
+							<button
+								class="btn-primary btn-block btn mt-6 rounded-full {isAuthLoading && 'loading'}"
+								>Sign in with magic link</button
+							>
+						</form>
+					{:else if magicLinkState === 'sent'}
+						<!-- magic link sent -->
+						<h3 class="p-0 text-xl font-bold">Check your email!</h3>
+						<p class="text-sm text-base-content/80">
+							We've sent a magic link to your email. Click the link to sign in.
+						</p>
+						<button
+							class="btn-block btn mt-4 rounded-full {isAuthLoading && 'loading'}"
+							on:click={signInEmailMagicLink}>Resend magic link</button
+						>
+					{/if}
+				{:else if authMethod === 'email'}
 					<!-- email pwd auth -->
 					<form on:submit={handleEmailPwdSubmit}>
 						<div class="flex flex-col gap-3">
-							<h3 class="p-0 text-xl font-medium">
+							<h3 class="p-0 text-xl font-bold">
 								{state === 'signin' ? 'Sign in' : 'Create an account'}
 							</h3>
 							<div class="form-control">
