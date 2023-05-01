@@ -21,8 +21,9 @@
 		</p>
 	{/if}
 	{#if linkLabel}
-		<a class="btn-primary btn mt-10 gap-1" href={linkHref} target="_blank" rel="noreferrer"
-			>{linkLabel} <span class="text-xl"><IconRightArrowLong /></span></a
-		>
+		<a class="btn-primary btn mt-10 gap-1" href={linkHref}>
+			{linkLabel}
+			<span class="text-xl"><IconRightArrowLong /></span>
+		</a>
 	{/if}
 </section>
