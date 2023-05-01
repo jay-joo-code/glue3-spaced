@@ -21,8 +21,7 @@
 	<div class="w-full {limitWidth && 'flex justify-center'}">
 		<div
 			class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 {limitWidth &&
-				'w-full max-w-6xl'}"
-		>
+				'w-full max-w-6xl'} {!noPadding && 'px-4'}">
 			<slot />
 		</div>
 	</div>
