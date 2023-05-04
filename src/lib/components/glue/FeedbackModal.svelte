@@ -48,7 +48,7 @@
 	<div class="fixed left-0 right-0 bottom-0 flex justify-center">
 		<div class="flex w-full max-w-6xl justify-end pb-6 pr-4 md:pr-0">
 			<div class="">
-				<label for="modal-feedback" class="btn-primary btn-sm btn">Thoughts on {APP_NAME}?</label>
+				<label for="modal-feedback" class="btn-sm btn">Thoughts on {APP_NAME}?</label>
 			</div>
 		</div>
 	</div>
@@ -62,23 +62,20 @@
 				<button
 					class="rounded-xl bg-base-200 p-4 text-6xl text-error {selected === 'bad' &&
 						'bg-red-100'}"
-					on:click={() => handleIconClick('bad')}
-				>
+					on:click={() => handleIconClick('bad')}>
 					<IconSadFace />
 				</button>
 				<button
 					class="rounded-xl bg-base-200 p-4 text-6xl text-yellow-500 {selected === 'mid' &&
 						'bg-yellow-100'}"
 					type="button"
-					on:click={() => handleIconClick('mid')}
-				>
+					on:click={() => handleIconClick('mid')}>
 					<IconNeutralFace />
 				</button>
 				<button
 					class="rounded-xl bg-base-200 p-4 text-6xl text-success  {selected === 'good' &&
 						'bg-green-100'}"
-					on:click={() => handleIconClick('good')}
-				>
+					on:click={() => handleIconClick('good')}>
 					<IconHappyFace />
 				</button>
 			</div>
@@ -93,8 +90,9 @@
 					<label
 						for="modal-feedback"
 						class="btn-primary btn-block btn"
-						on:click={handleSubmitFeedbackText}>Submit</label
-					>
+						on:click={handleSubmitFeedbackText}>
+						Submit
+					</label>
 				</div>
 			</div>
 		{/if}

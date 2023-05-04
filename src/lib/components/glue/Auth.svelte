@@ -74,7 +74,6 @@
 			}
 		});
 		magicLinkState = 'sent';
-		email = '';
 		isAuthLoading = false;
 	}
 
@@ -126,9 +125,9 @@
 	</div>
 {:else}
 	<!-- else, show sign in button -->
-	<button>
+	<!-- <button>
 		<label for="modal-auth" class="btn-ghost btn-sm btn md:btn-md">Sign in</label>
-	</button>
+	</button> -->
 
 	<!-- sign in modal -->
 	<input type="checkbox" id="modal-auth" class="modal-toggle" />
