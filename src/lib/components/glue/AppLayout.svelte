@@ -83,6 +83,8 @@
 								</div>
 							</div>
 						</div>
+
+						<!-- authed avatar -->
 						<Auth />
 					</div>
 				</div>
