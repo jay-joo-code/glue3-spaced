@@ -74,6 +74,7 @@
 			}
 		});
 		magicLinkState = 'sent';
+		email = '';
 		isAuthLoading = false;
 	}
 
@@ -157,7 +158,7 @@
 					{#if magicLinkState === 'not-sent'}
 						<form class="pb-4" on:submit={signInEmailMagicLink}>
 							<h3 class="p-0 text-xl font-bold">Get started with {APP_NAME}</h3>
-							<div class="form-control mt-6">
+							<div class="form-control mt-4">
 								<label class="label font-medium text-base-content/70" for="email">Email</label>
 								<input
 									class="input-bordered input w-full max-w-xs"
@@ -168,7 +169,7 @@
 									bind:value={email} />
 							</div>
 							<button
-								class="btn-primary btn-block btn mt-6 rounded-full {isAuthLoading && 'loading'}">
+								class="btn-primary btn-block btn mt-8 rounded-full {isAuthLoading && 'loading'}">
 								Sign in with magic link
 							</button>
 						</form>
