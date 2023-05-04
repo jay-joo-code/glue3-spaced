@@ -11,7 +11,7 @@
 	let password: string;
 	let authError: string;
 	let state: 'signin' | 'register' = 'signin';
-	let authMethod: 'magic-link' | 'email' | 'google' = 'magic-link';
+	let authMethod: 'magic-link' | 'email' | 'google' | 'linkedin' = 'magic-link';
 	let magicLinkState: 'sent' | 'not-sent' = 'not-sent';
 	let isAuthLoading = false;
 
@@ -76,6 +76,17 @@
 		magicLinkState = 'sent';
 		isAuthLoading = false;
 	}
+
+	const signInLinkedIn = async () => {
+		isAuthLoading = true;
+		await supabase.auth.signInWithOAuth({
+			provider: 'linkedin',
+			options: {
+				redirectTo: window.location.origin
+			}
+		});
+		isAuthLoading = false;
+	};
 </script>
 
 {#if $page?.data?.session}
@@ -226,6 +237,17 @@
 								</button>
 							</div>
 						</div>
+					</form>
+				{:else if authMethod === 'linkedin'}
+					<form class="" on:submit={signInLinkedIn}>
+						<h3 class="p-0 text-2xl font-bold">Sign in</h3>
+						<p class="mt-3 text-sm text-base-content/70">
+							Sign in with LinkedIn to automatically import your profile information.
+						</p>
+						<button
+							class="btn-primary btn-block btn mt-6 rounded-full {isAuthLoading && 'loading'}">
+							Sign in with LinkedIn
+						</button>
 					</form>
 				{/if}
 			</div>
