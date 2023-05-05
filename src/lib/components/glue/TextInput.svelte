@@ -14,7 +14,7 @@
 <div class="form-control w-full">
 	{#if label}
 		<label class="label">
-			<span class="label-text text-base-content/80">{label}</span>
+			<span class="label-text font-semibold text-base-content/80">{label}</span>
 		</label>
 	{/if}
 	<input
@@ -35,8 +35,7 @@
 		type="text"
 		{...$$restProps}
 		{name}
-		class="{$$props.class} input-bordered input w-full ${error && 'input-error'}"
-	/>
+		class="{$$props.class} input-bordered input w-full ${error && 'input-error'}" />
 	{#if error}
 		<label class="label">
 			<span class="label-text-alt text-error">{error}</span>
