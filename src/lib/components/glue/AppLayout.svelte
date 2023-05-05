@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { APP_NAME, IS_BETA, PUBLIC_NAVS } from '$lib/glue/config';
 	import Auth from './Auth.svelte';
 	import FeedbackModal from './FeedbackModal.svelte';
@@ -77,7 +78,9 @@
 								<div class="menu menu-horizontal px-2">
 									{#if PUBLIC_NAVS?.length > 0}
 										{#each PUBLIC_NAVS as nav}
-											<li class="text-sm font-semibold"><a href={nav.path}>{nav.label}</a></li>
+											{#if nav.path !== '/signin' || !$page?.data?.session}
+												<li class="text-sm font-semibold"><a href={nav.path}>{nav.label}</a></li>
+											{/if}
 										{/each}
 									{/if}
 								</div>
@@ -117,13 +120,15 @@
 				</button>
 				<ul class="menu mt-2 rounded-xl bg-base-100 p-2">
 					{#each PUBLIC_NAVS as nav}
-						<li
-							class="font-semibold"
-							on:click={() => {
-								isDrawerOpen = false;
-							}}>
-							<a href={nav.path}>{nav.label}</a>
-						</li>
+						{#if nav.path !== '/signin' || !$page?.data?.session}
+							<li
+								class="font-semibold"
+								on:click={() => {
+									isDrawerOpen = false;
+								}}>
+								<a href={nav.path}>{nav.label}</a>
+							</li>
+						{/if}
 					{/each}
 				</ul>
 			</div>
