@@ -4,7 +4,7 @@
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 	import TextInput from '$lib/components/glue/TextInput.svelte';
 	import { APP_NAME } from '$lib/glue/config';
-	import { supabase } from '$lib/glue/supabaseClient';
+
 	import IconGoogle from '$lib/icons/glue/IconGoogle.svelte';
 
 	let email: string = '';
@@ -16,7 +16,8 @@
 		const redirectTo = $page.url.searchParams.get('redirectTo')
 			? $page.url.origin + $page.url.searchParams.get('redirectTo')
 			: '/';
-		await supabase.auth.signInWithOAuth({
+
+		await $page?.data?.supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
 				redirectTo
@@ -30,7 +31,7 @@
 		const emailRedirectTo = $page.url.searchParams.get('redirectTo')
 			? $page.url.origin + $page.url.searchParams.get('redirectTo')
 			: '/';
-		const { error } = await supabase.auth.signInWithOtp({
+		const { error } = await $page?.data?.supabase.auth.signInWithOtp({
 			email,
 			options: {
 				emailRedirectTo

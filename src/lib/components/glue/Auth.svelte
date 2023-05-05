@@ -2,7 +2,6 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { APP_NAME, IS_ENFORCE_CORNELL_EMAIL, PRIVATE_NAVS } from '$lib/glue/config';
-	import { supabase } from '$lib/glue/supabaseClient';
 	import IconGoogle from '$lib/icons/glue/IconGoogle.svelte';
 	import IconLogout from '$lib/icons/glue/IconLogout.svelte';
 	import IconPerson from '$lib/icons/glue/IconPerson.svelte';
@@ -16,13 +15,13 @@
 	let isAuthLoading = false;
 
 	const signInWithGoogle = async () => {
-		await supabase.auth.signInWithOAuth({
+		await $page?.data?.supabase.auth.signInWithOAuth({
 			provider: 'google'
 		});
 	};
 
 	const signOut = async () => {
-		await supabase.auth.signOut();
+		await $page?.data?.supabase.auth.signOut();
 		invalidateAll();
 	};
 
@@ -32,7 +31,7 @@
 	};
 
 	const signUpEmailPwd = async () => {
-		let { data, error } = await supabase.auth.signUp({
+		let { data, error } = await $page?.data?.supabase.auth.signUp({
 			email,
 			password
 		});
@@ -45,7 +44,7 @@
 	};
 
 	const loginEmailPwd = async () => {
-		let { data, error } = await supabase.auth.signInWithPassword({
+		let { data, error } = await $page?.data?.supabase.auth.signInWithPassword({
 			email,
 			password
 		});
@@ -67,7 +66,7 @@
 
 	async function signInEmailMagicLink() {
 		isAuthLoading = true;
-		const { data, error } = await supabase.auth.signInWithOtp({
+		const { data, error } = await $page?.data?.supabase.auth.signInWithOtp({
 			email,
 			options: {
 				emailRedirectTo: `${window.location.origin}/magic-link-redirect`
@@ -79,7 +78,7 @@
 
 	const signInLinkedIn = async () => {
 		isAuthLoading = true;
-		await supabase.auth.signInWithOAuth({
+		await $page?.data?.supabase.auth.signInWithOAuth({
 			provider: 'linkedin',
 			options: {
 				redirectTo: window.location.origin

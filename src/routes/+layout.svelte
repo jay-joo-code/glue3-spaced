@@ -1,20 +1,23 @@
 <script>
 	import AppLayout from '$lib/components/glue/AppLayout.svelte';
-	import { supabase } from '$lib/glue/supabaseClient';
+
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { SvelteToast } from '@zerodevx/svelte-toast';
+	import { page } from '$app/stores';
+
+	$: ({ supabase, session } = $page?.data);
 
 	onMount(() => {
 		const {
 			data: { subscription }
-		} = supabase.auth.onAuthStateChange(() => {
-			invalidate('supabase:auth');
+		} = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth');
+			}
 		});
 
-		return () => {
-			subscription.unsubscribe();
-		};
+		return () => subscription.unsubscribe();
 	});
 
 	const toastOptions = {
