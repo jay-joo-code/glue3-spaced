@@ -13,3 +13,7 @@ export const PRIVATE_NAVS: IPrivateNav[] = [
 export const IS_ENFORCE_CORNELL_EMAIL = false;
 export const IS_BETA = true;
 export const SENTRY_DSN_PUBLIC = '';
+
+// used in terms and conditions
+export const ADMIN_EMAIL = 'referhub.team@gmail.com';
+export const PROD_DOMAIN = 'https://www.referhub.org';
