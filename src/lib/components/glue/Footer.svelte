@@ -30,10 +30,7 @@
 	];
 </script>
 
-<footer
-	class="mt-20 flex justify-center border-t border-base-content/10"
-	aria-labelledby="footerHeading"
->
+<footer class="flex justify-center border-t border-base-content/10" aria-labelledby="footerHeading">
 	<h2 id="footerHeading" class="sr-only">Footer</h2>
 	<div class="relative mx-auto w-full max-w-6xl px-6 py-16 sm:py-18 md:py-24 lg:py-24">
 		<div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -54,9 +51,9 @@
 									<li>
 										<a
 											href={link.href}
-											class="btn-ghost btn-sm btn px-1 font-medium text-base-content/60"
-											>{link.label}</a
-										>
+											class="btn-ghost btn-sm btn px-1 font-medium text-base-content/60">
+											{link.label}
+										</a>
 									</li>
 								{/each}
 							</ul>
