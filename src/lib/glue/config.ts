@@ -5,8 +5,8 @@ export const APP_NAME = 'AppName';
 export const PUBLIC_NAVS: IPublicNav[] = [];
 export const PRIVATE_NAVS: IPrivateNav[] = [
 	{
-		path: '/profile/tours',
-		label: 'My Tours',
+		path: '/private-route',
+		label: 'Test private route',
 		icon: IconCar
 	}
 ];

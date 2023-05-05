@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { APP_NAME, IS_ENFORCE_CORNELL_EMAIL, PRIVATE_NAVS } from '$lib/glue/config';
 	import { supabase } from '$lib/glue/supabaseClient';
@@ -23,6 +23,7 @@
 
 	const signOut = async () => {
 		await supabase.auth.signOut();
+		invalidateAll();
 	};
 
 	const toggleState = () => {
