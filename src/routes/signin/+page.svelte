@@ -1,36 +1,57 @@
 <script lang="ts">
+	import { afterNavigate, goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 	import TextInput from '$lib/components/glue/TextInput.svelte';
 	import { APP_NAME } from '$lib/glue/config';
 	import { supabase } from '$lib/glue/supabaseClient';
 	import IconGoogle from '$lib/icons/glue/IconGoogle.svelte';
-	import { onMount } from 'svelte';
 
 	let email: string = '';
-	let magicLinkState: 'sent' | 'not-sent' = 'not-sent';
-	let isMagicLinkLoading = false;
+	let isMagicLinkSent: boolean = false;
+	let isMagicLinkLoading: boolean = false;
+	let magicLinkError: string = '';
 
 	const signInWithGoogle = async () => {
+		const redirectTo = $page.url.searchParams.get('redirectTo')
+			? $page.url.origin + $page.url.searchParams.get('redirectTo')
+			: '/';
 		await supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
-				redirectTo: window.location.origin + '/signin'
+				redirectTo
 			}
 		});
 	};
 
-	async function signInEmailMagicLink() {
+	const signInEmailMagicLink = async () => {
 		isMagicLinkLoading = true;
-		const { data, error } = await supabase.auth.signInWithOtp({
-			email
-		});
-		magicLinkState = 'sent';
-		isMagicLinkLoading = false;
-	}
 
-	onMount(() => {
-		console.log('$page', $page?.data);
+		const emailRedirectTo = $page.url.searchParams.get('redirectTo')
+			? $page.url.origin + $page.url.searchParams.get('redirectTo')
+			: '/';
+		const { error } = await supabase.auth.signInWithOtp({
+			email,
+			options: {
+				emailRedirectTo
+			}
+		});
+
+		if (error) {
+			magicLinkError = error.message;
+		} else {
+			isMagicLinkSent = true;
+			magicLinkError = '';
+		}
+
+		isMagicLinkLoading = false;
+	};
+
+	afterNavigate(({ from }) => {
+		if (from?.url && !$page.url.searchParams.get('redirectTo')) {
+			$page.url.searchParams.set('redirectTo', from?.url.pathname + from?.url.search);
+			goto(`?${$page.url.searchParams.toString()}`);
+		}
 	});
 </script>
 
@@ -53,13 +74,32 @@
 			<div class="divider mt-10 mb-4">OR</div>
 
 			<!-- magic link -->
-			<form on:submit={signInEmailMagicLink}>
-				<TextInput bind:value={email} label="Email" type="email" />
-				<button
-					class="btn-primary btn-block btn mt-4 {isMagicLinkLoading && 'loading'}"
-					disabled={!Boolean(email)}>
-					Email me a sign in link
-				</button>
+			<form on:submit|preventDefault={signInEmailMagicLink}>
+				{#if isMagicLinkSent}
+					<div class="mt-6 rounded-xl bg-success/5 p-4">
+						<p class="text-center text-sm text-success">
+							A sign in link has been sent to your email!
+						</p>
+					</div>
+					<button
+						class="btn-ghost btn-xs btn mt-4"
+						on:click={() => {
+							isMagicLinkSent = false;
+							email = '';
+						}}>
+						Use a different email
+					</button>
+				{:else}
+					<TextInput bind:value={email} label="Email" type="email" />
+					<button
+						class="btn-primary btn-block btn mt-4 {isMagicLinkLoading && 'loading'}"
+						disabled={!Boolean(email)}>
+						Email me a sign in link
+					</button>
+					{#if magicLinkError}
+						<p class="mt-2 text-xs text-error">{magicLinkError}</p>
+					{/if}
+				{/if}
 			</form>
 
 			<!-- terms -->
