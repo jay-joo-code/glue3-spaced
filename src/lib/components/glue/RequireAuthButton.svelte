@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentUser } from '$lib/glue/pocketbase';
+	import { page } from '$app/stores';
 	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	interface $$Props extends HTMLButtonAttributes {
@@ -9,7 +9,7 @@
 	export let href: string = '';
 </script>
 
-{#if $currentUser}
+{#if $page?.data?.session}
 	{#if href}
 		<a {href}>
 			<button on:click {...$$restProps} class={$$props.class}>

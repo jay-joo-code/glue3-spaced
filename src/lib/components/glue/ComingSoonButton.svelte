@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { pb } from '$lib/glue/pocketbase';
-
 	export let variant: string;
 	export let context = {};
 	export let infoParagraphs = [
@@ -9,12 +7,7 @@
 	];
 
 	const handleClick = () => {
-		try {
-			pb.collection('logs').create({
-				variant,
-				context
-			});
-		} catch (error) {}
+		// TODO: log clicks
 	};
 </script>
 
