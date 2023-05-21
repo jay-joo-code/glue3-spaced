@@ -13,9 +13,7 @@
 	let magicLinkError: string = '';
 
 	const signInWithGoogle = async () => {
-		const redirectTo = $page.url.searchParams.get('redirectTo')
-			? $page.url.origin + $page.url.searchParams.get('redirectTo')
-			: '/';
+		const redirectTo = `${$page.url.origin}/redirect?${$page.url.searchParams.toString()}`;
 
 		await $page?.data?.supabase.auth.signInWithOAuth({
 			provider: 'google',
@@ -28,9 +26,8 @@
 	const signInEmailMagicLink = async () => {
 		isMagicLinkLoading = true;
 
-		const emailRedirectTo = $page.url.searchParams.get('redirectTo')
-			? $page.url.origin + $page.url.searchParams.get('redirectTo')
-			: '/';
+		const emailRedirectTo = `${$page.url.origin}/redirect?${$page.url.searchParams.toString()}`;
+
 		const { error } = await $page?.data?.supabase.auth.signInWithOtp({
 			email,
 			options: {
@@ -57,13 +54,14 @@
 </script>
 
 <PageContainer title="Sign in" noPadding={true} limitWidth={false}>
-	<div class="relative flex h-[80vh] items-center justify-center px-4">
-		<div class="z-10 w-full rounded-xl bg-base-100 p-4 text-center sm:max-w-sm">
+	<div class="flex h-full min-h-[85vh] items-center justify-center bg-base-200 px-4">
+		<div
+			class="my-8 w-full rounded-xl border border-base-content/20 bg-base-100 px-8 py-16 text-center sm:max-w-sm">
 			<h1 class="text-3xl font-bold">Welcome back</h1>
 			<p class="mt-2 text-sm text-base-content/70">Sign in to get started with {APP_NAME}</p>
 
 			<!-- oauth -->
-			<div class="mt-6 space-y-4">
+			<div class="mt-12 space-y-4">
 				<button
 					type="button"
 					class="btn-outline btn-block btn mt-2 gap-2"
@@ -95,7 +93,7 @@
 					<button
 						class="btn-primary btn-block btn mt-4 {isMagicLinkLoading && 'loading'}"
 						disabled={!Boolean(email)}>
-						Email me a sign in link
+						Sign in with email
 					</button>
 					{#if magicLinkError}
 						<p class="mt-2 text-xs text-error">{magicLinkError}</p>

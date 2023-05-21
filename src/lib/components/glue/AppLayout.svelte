@@ -94,7 +94,7 @@
 			</div>
 			<div class="relative w-full">
 				<!-- body content -->
-				<div class="min-h-[82vh]">
+				<div class="min-h-[85vh]">
 					<slot />
 				</div>
 

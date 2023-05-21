@@ -1,6 +1,7 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { PRIVATE_NAVS } from '$lib/glue/config';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
@@ -20,6 +21,18 @@ export const handle: Handle = async ({ event, resolve }) => {
 		} = await event.locals.supabase.auth.getSession();
 		return session;
 	};
+
+	// private path protection
+	const privatePaths = PRIVATE_NAVS.map((nav) => nav.path);
+	const session = await event.locals.getSession();
+	if (privatePaths?.includes(event.url.pathname)) {
+		if (!session) {
+			if (!event.url.searchParams.get('redirectTo')) {
+				event.url.searchParams.set('redirectTo', event.url.pathname + event.url.search);
+			}
+			throw redirect(307, `/signin?${event.url.searchParams.toString()}`);
+		}
+	}
 
 	return resolve(event, {
 		/**

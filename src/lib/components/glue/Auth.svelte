@@ -21,7 +21,7 @@
 	};
 
 	const signOut = async () => {
-		await $page?.data?.supabase.auth.signOut();
+		const { error } = await $page?.data?.supabase.auth.signOut();
 		invalidateAll();
 	};
 
