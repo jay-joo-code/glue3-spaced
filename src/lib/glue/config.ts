@@ -2,7 +2,12 @@ import IconCar from '$lib/icons/glue/IconCar.svelte';
 import type { IPrivateNav, IPublicNav } from '$lib/types/glue/nav.type';
 
 export const APP_NAME = 'AppName';
-export const PUBLIC_NAVS: IPublicNav[] = [];
+export const PUBLIC_NAVS: IPublicNav[] = [
+	{
+		path: '/signin',
+		label: 'Sign in'
+	}
+];
 export const PRIVATE_NAVS: IPrivateNav[] = [
 	{
 		path: '/private-route',
