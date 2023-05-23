@@ -3,7 +3,8 @@
 
 	export let title = '';
 	export let layout: 'mobile-only' | 'aside-main' = 'mobile-only';
-	export let noPadding = false;
+	export let isHoriPadding = true;
+	export let isVertPadding = true;
 	export let limitWidth = true;
 </script>
 
@@ -12,7 +13,9 @@
 </svelte:head>
 {#if layout === 'mobile-only'}
 	<div class="flex justify-center">
-		<div class="w-full {!noPadding && 'px-4'} {limitWidth && 'max-w-6xl'}">
+		<div
+			class="w-full {isHoriPadding && 'px-4'} {isVertPadding && 'pt-4 pb-8'} {limitWidth &&
+				'max-w-6xl'}">
 			<slot />
 		</div>
 	</div>
@@ -21,7 +24,7 @@
 	<div class="w-full {limitWidth && 'flex justify-center'}">
 		<div
 			class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 {limitWidth &&
-				'w-full max-w-6xl'} {!noPadding && 'px-4'}">
+				'w-full max-w-6xl'} {isHoriPadding && 'px-4'} {isVertPadding && 'pt-4 pb-8'}">
 			<slot />
 		</div>
 	</div>
