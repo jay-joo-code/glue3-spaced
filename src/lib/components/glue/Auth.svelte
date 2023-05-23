@@ -6,6 +6,8 @@
 	import IconLogout from '$lib/icons/glue/IconLogout.svelte';
 	import IconPerson from '$lib/icons/glue/IconPerson.svelte';
 
+	export let data;
+
 	let email: string;
 	let password: string;
 	let authError: string;
@@ -95,7 +97,9 @@
 			<div class="placeholder avatar">
 				<div
 					class="w-8 rounded-full bg-neutral-focus text-neutral-content ring-2 ring ring-primary ring-offset-2 ring-offset-base-100">
-					{#if $page?.data?.session?.user?.user_metadata?.avatar_url}
+					{#if $page?.data?.profile?.avatarUrl}
+						<img src={$page?.data?.profile?.avatarUrl} />
+					{:else if $page?.data?.session?.user?.user_metadata?.avatar_url}
 						<img src={$page?.data?.session?.user?.user_metadata?.avatar_url} />
 					{:else if $page?.data?.session?.user?.user_metadata?.name}
 						<span class="text-sm">
