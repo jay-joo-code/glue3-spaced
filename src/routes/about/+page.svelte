@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import SectionBoldStatement from '$lib/components/glue/landing/SectionBoldStatement.svelte';
 	import SectionFeatureList from '$lib/components/glue/landing/SectionFeatureList.svelte';
 	import SectionHero from '$lib/components/glue/landing/SectionHero.svelte';
@@ -7,7 +6,7 @@
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 </script>
 
-<PageContainer title="Home">
+<PageContainer title="Home" isHoriPadding={false}>
 	<SectionHero />
 	<SectionFeatureList />
 	<SectionBoldStatement />
