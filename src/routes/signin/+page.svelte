@@ -53,7 +53,7 @@
 	});
 </script>
 
-<PageContainer title="Sign in" noPadding={true} limitWidth={false}>
+<PageContainer title="Sign in" isHoriPadding={false} limitWidth={false} isVertPadding={false}>
 	<div class="flex h-full min-h-[85vh] items-center justify-center bg-base-200 px-4">
 		<div
 			class="my-8 w-full rounded-xl border border-base-content/20 bg-base-100 px-8 py-16 text-center sm:max-w-sm">
@@ -89,7 +89,7 @@
 						Use a different email
 					</button>
 				{:else}
-					<TextInput bind:value={email} label="Email" type="email" />
+					<TextInput bind:value={email} name="email" label="Email" type="email" />
 					<button
 						class="btn-primary btn-block btn mt-4 {isMagicLinkLoading && 'loading'}"
 						disabled={!Boolean(email)}>
