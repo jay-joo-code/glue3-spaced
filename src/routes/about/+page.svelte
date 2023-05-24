@@ -3,10 +3,12 @@
 	import SectionFeatureList from '$lib/components/glue/landing/SectionFeatureList.svelte';
 	import SectionHero from '$lib/components/glue/landing/SectionHero.svelte';
 	import SectionInfo from '$lib/components/glue/landing/SectionInfo.svelte';
+	import SectionRotatingCirclesHero from '$lib/components/glue/landing/SectionRotatingCirclesHero.svelte';
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 </script>
 
 <PageContainer title="Home" isHoriPadding={false}>
+	<SectionRotatingCirclesHero />
 	<SectionHero />
 	<SectionFeatureList />
 	<SectionBoldStatement />
