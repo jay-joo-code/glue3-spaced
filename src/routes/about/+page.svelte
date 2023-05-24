@@ -7,7 +7,7 @@
 	import PageContainer from '$lib/components/glue/PageContainer.svelte';
 </script>
 
-<PageContainer title="Home" isHoriPadding={false}>
+<PageContainer title="About us" isHoriPadding={false}>
 	<SectionRotatingCirclesHero />
 	<SectionHero />
 	<SectionFeatureList />
