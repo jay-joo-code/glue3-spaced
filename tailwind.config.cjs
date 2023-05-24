@@ -21,15 +21,19 @@ module.exports = {
 			{
 				light: {
 					...require('daisyui/src/colors/themes')['[data-theme=light]'],
+					'base-content': colors.slate[700],
 					'base-200': '#F8F8F8',
-					primary: colors.indigo[500]
+					primary: colors.indigo[500],
+					secondary: colors.slate[700]
 				}
 			},
 			{
 				dark: {
 					...require('daisyui/src/colors/themes')['[data-theme=dark]'],
+					'base-content': '#FCFCFC',
 					primary: colors.indigo[500],
-					'base-content': '#FCFCFC'
+					secondary: '#FCFCFC',
+					'secondary-content': colors.slate[800]
 				}
 			}
 		]
