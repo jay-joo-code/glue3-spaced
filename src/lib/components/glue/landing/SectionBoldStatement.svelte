@@ -13,11 +13,14 @@
 <section class="relative min-h-[60vh] overflow-hidden px-8 py-16 text-center md:pt-48">
 	<RadialGradient />
 	<p class="text-lg font-bold text-primary">{overline}</p>
-	<h2 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-		{heading}
-	</h2>
+	<div class="flex justify-center">
+		<h2 class="mt-4 max-w-3xl text-4xl font-extrabold !leading-snug tracking-tight sm:text-5xl">
+			{heading}
+		</h2>
+	</div>
 	{#if desc}
-		<p class="mx-auto mt-10 max-w-3xl text-lg text-base-content/70">
+		<p
+			class="text-md mx-auto mt-10 max-w-xl font-normal leading-relaxed text-base-content/70 md:text-lg">
 			{desc}
 		</p>
 	{/if}
