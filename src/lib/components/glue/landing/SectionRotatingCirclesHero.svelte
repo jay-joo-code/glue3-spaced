@@ -85,7 +85,7 @@
 	];
 </script>
 
-<div class="relative pb-24">
+<div class="relative w-full max-w-full overflow-hidden pb-24">
 	<div class="relative flex  min-h-[80vh] w-full scale-75 items-center justify-center md:scale-100">
 		<!-- content -->
 		<div class="">
