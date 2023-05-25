@@ -99,7 +99,7 @@
 				class="mt-8 max-w-md text-center text-xl font-normal leading-relaxed text-base-content/70 md:text-lg">
 				{desc}
 			</p>
-			<div class="mt-10 flex justify-center">
+			<div class="relative z-20 mt-10 flex justify-center">
 				<a href={linkHref}>
 					<button class="btn-secondary btn gap-2">
 						{linkLabel}
