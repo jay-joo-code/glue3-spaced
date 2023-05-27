@@ -1,9 +1,21 @@
-import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { sequence } from '@sveltejs/kit/hooks';
+import * as Sentry from '@sentry/sveltekit';
+import {
+	PUBLIC_SUPABASE_URL,
+	PUBLIC_SUPABASE_ANON_KEY,
+	PUBLIC_SENTRY_DSN
+} from '$env/static/public';
 import { PRIVATE_NAVS } from '$lib/glue/config';
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit';
 import { redirect, type Handle } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 
-export const handle: Handle = async ({ event, resolve }) => {
+Sentry.init({
+	dsn: dev ? undefined : PUBLIC_SENTRY_DSN,
+	tracesSampleRate: 1.0
+});
+
+export const handle: Handle = sequence(Sentry.sentryHandle(), async ({ event, resolve }) => {
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
@@ -44,4 +56,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return name === 'content-range';
 		}
 	});
-};
+});
+
+export const handleError = Sentry.handleErrorWithSentry();

@@ -23,7 +23,7 @@ git switch -c glue-main glue/main
 
 ## Gmail
 
-The format of the project gmail account is project.name.team@gmail.com.
+The format of the project gmail account is project-name.team@gmail.com.
 
 ## Add branch protection rules
 
@@ -57,6 +57,6 @@ git push glue glue-main:main
 
 The entire backend is handled by Supbase.
 
-## Sentry integration
+## Sentry
 
-https://github.com/getsentry/sentry-javascript/discussions/5838#discussioncomment-4591389
+Update `sentry.properties` file with project name (ex. glue3-referhub)
