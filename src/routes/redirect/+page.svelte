@@ -14,15 +14,21 @@
 		const url = `${$page.url.origin}${redirectTo || '/'}`;
 		goto(url);
 	}
+	$: authError = new URLSearchParams($page?.url.hash).get('error_description');
 </script>
-
-<!-- TODO: error message, goto /signin button if session is null -->
 
 <PageContainer title="Signing in to {APP_NAME}">
 	<div class="flex min-h-[85vh] w-full items-center justify-center">
 		<div class="flex flex-col items-center">
-			<Loading />
-			<p class="mt-8 text-xs text-base-content/70">Signing in to {APP_NAME}</p>
+			{#if authError}
+				<p class="text-error">{authError}</p>
+				<a class="mt-4" href="/signin">
+					<buton class="btn-secondary btn-sm btn">Sign in again</buton>
+				</a>
+			{:else}
+				<Loading />
+				<p class="mt-8 text-xs text-base-content/70">Signing in to {APP_NAME}</p>
+			{/if}
 		</div>
 	</div>
 </PageContainer>
