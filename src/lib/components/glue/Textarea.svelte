@@ -12,7 +12,7 @@
 <div class="form-control">
 	{#if label}
 		<label class="label">
-			<span class="label-text text-base-content/80">{label}</span>
+			<span class="label-text font-semibold text-base-content/80">{label}</span>
 		</label>
 	{/if}
 	<textarea
@@ -32,6 +32,5 @@
 		on:paste
 		{...$$restProps}
 		{name}
-		class={`${$$props.class} textarea-bordered textarea h-24 w-full text-base`}
-	/>
+		class={`${$$props.class} textarea-bordered textarea h-24 w-full text-base`} />
 </div>
