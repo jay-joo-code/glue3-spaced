@@ -20,7 +20,7 @@ module.exports = {
 		themes: [
 			{
 				light: {
-					...require('daisyui/src/colors/themes')['[data-theme=light]'],
+					...require('daisyui/src/theming/themes')['[data-theme=light]'],
 					'base-content': colors.slate[700],
 					'base-200': '#F8F8F8',
 					primary: colors.indigo[500],
@@ -29,7 +29,7 @@ module.exports = {
 			},
 			{
 				dark: {
-					...require('daisyui/src/colors/themes')['[data-theme=dark]'],
+					...require('daisyui/src/theming/themes')['[data-theme=dark]'],
 					'base-content': '#FCFCFC',
 					primary: colors.indigo[500],
 					secondary: '#FCFCFC',

@@ -46,7 +46,7 @@
 		"axios": "^1.4.0",
 		"browser-image-compression": "^2.0.2",
 		"cheerio": "^1.0.0-rc.12",
-		"daisyui": "^2.51.5",
+		"daisyui": "^3.0.23",
 		"date-fns": "^2.29.3",
 		"date-fns-tz": "^2.0.0",
 		"date-picker-svelte": "^2.2.5",
