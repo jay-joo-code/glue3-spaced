@@ -24,8 +24,9 @@ module.exports = {
 					'base-content': colors.slate[700],
 					'base-200': '#F8F8F8',
 					primary: colors.indigo[500],
+					'primary-content': colors.white,
 					secondary: colors.slate[700],
-					'secondary-content': '#FFFFFF'
+					'secondary-content': colors.white
 				}
 			},
 			{
