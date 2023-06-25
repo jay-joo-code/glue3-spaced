@@ -13,7 +13,7 @@
 	export let options: { value: string; label: string }[] = [];
 </script>
 
-<div class="{$$props.class} form-control w-full">
+<div class="form-control w-full">
 	{#if label}
 		<label class="label">
 			<span class="label-text text-base-content/80">{label}</span>
@@ -35,8 +35,7 @@
 		on:mouseover
 		on:paste
 		{...$$restProps}
-		class={`select-bordered select w-full max-w-xs ${error && 'input-error'}`}
-	>
+		class="{$$props.class} select-bordered select w-full max-w-xs {error && 'input-error'}">
 		<option selected disabled>{placeholder}</option>
 		{#each options as { value, label }}
 			<option {value}>{label}</option>
