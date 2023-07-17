@@ -101,9 +101,12 @@
 					{/if}
 				</div>
 				<button
-					class="btn-primary btn mt-8 {isSaveLoading && 'loading'}"
+					class="btn-primary btn mt-8"
 					on:click={saveProfile}
-					disabled={isUploadLoading}>
+					disabled={isUploadLoading || isSaveLoading}>
+					{#if isSaveLoading}
+						<span class="loading loading-spinner" />
+					{/if}
 					Save profile
 				</button>
 			</form>

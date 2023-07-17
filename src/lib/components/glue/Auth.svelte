@@ -115,7 +115,7 @@
 		</label>
 		<ul
 			tabindex="0"
-			class="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-200 p-2 shadow">
+			class="menu-compact dropdown-content menu rounded-box mt-3 w-52 bg-base-200 p-2 shadow">
 			{#each PRIVATE_NAVS as nav}
 				<li>
 					<a href={nav.path}>
@@ -170,8 +170,10 @@
 									required
 									bind:value={email} />
 							</div>
-							<button
-								class="btn-primary btn-block btn mt-8 rounded-full {isAuthLoading && 'loading'}">
+							<button class="btn-primary btn-block btn mt-8 rounded-full" disabled={isAuthLoading}>
+								{#if isAuthLoading}
+									<span class="loading loading-spinner" />
+								{/if}
 								Sign in with magic link
 							</button>
 						</form>
@@ -182,8 +184,12 @@
 							We've sent a magic link to your email. Click the link to sign in.
 						</p>
 						<button
-							class="btn-block btn mt-4 rounded-full {isAuthLoading && 'loading'}"
-							on:click={signInEmailMagicLink}>
+							class="btn-block btn mt-4 rounded-full"
+							on:click={signInEmailMagicLink}
+							disabled={isAuthLoading}>
+							{#if isAuthLoading}
+								<span class="loading loading-spinner" />
+							{/if}
 							Resend magic link
 						</button>
 					{/if}
@@ -247,8 +253,10 @@
 						<p class="mt-3 text-sm text-base-content/70">
 							Sign in with LinkedIn to automatically import your profile information.
 						</p>
-						<button
-							class="btn-primary btn-block btn mt-6 rounded-full {isAuthLoading && 'loading'}">
+						<button class="btn-primary btn-block btn mt-6 rounded-full" disabled={isAuthLoading}>
+							{#if isAuthLoading}
+								<span class="loading loading-spinner" />
+							{/if}
 							Sign in with LinkedIn
 						</button>
 					</form>

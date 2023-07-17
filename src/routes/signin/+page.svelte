@@ -91,8 +91,11 @@
 				{:else}
 					<TextInput bind:value={email} name="email" label="Email" type="email" />
 					<button
-						class="btn-primary btn-block btn mt-4 {isMagicLinkLoading && 'loading'}"
-						disabled={!Boolean(email)}>
+						class="btn-primary btn-block btn mt-4"
+						disabled={!Boolean(email) || isMagicLinkLoading}>
+						{#if isMagicLinkLoading}
+							<span class="loading loading-spinner" />
+						{/if}
 						Sign in with email
 					</button>
 					{#if magicLinkError}
