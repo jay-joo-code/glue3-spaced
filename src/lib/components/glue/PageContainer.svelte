@@ -11,11 +11,12 @@
 <svelte:head>
 	<title>{title ? `${title} | ` : ''}{APP_NAME}</title>
 </svelte:head>
+
 {#if layout === 'mobile-only'}
 	<div class="flex justify-center">
 		<div
-			class="w-full {isHoriPadding && 'px-4'} {isVertPadding && 'pt-4 pb-8'} {limitWidth &&
-				'max-w-6xl'}">
+			class="{$$props.class} w-full {isHoriPadding && 'px-4'} {isVertPadding &&
+				'pt-4 pb-8'} {limitWidth && 'max-w-6xl'}">
 			<slot />
 		</div>
 	</div>
@@ -23,7 +24,7 @@
 	<!-- aside main layout: should only have 2 top level children -->
 	<div class="w-full {limitWidth && 'flex justify-center'}">
 		<div
-			class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 {limitWidth &&
+			class="{$$props.class} flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 {limitWidth &&
 				'w-full max-w-6xl'} {isHoriPadding && 'px-4'} {isVertPadding && 'pt-4 pb-8'}">
 			<slot />
 		</div>
