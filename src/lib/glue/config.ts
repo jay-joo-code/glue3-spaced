@@ -21,4 +21,4 @@ export const SENTRY_DSN_PUBLIC = '';
 
 // used in terms and conditions
 export const ADMIN_EMAIL = 'cornellsentiment@gmail.com';
-export const PROD_DOMAIN = 'https://www.referhub.org';
+export const PROD_DOMAIN = 'https://glue3-spaced.vercel.app/';
