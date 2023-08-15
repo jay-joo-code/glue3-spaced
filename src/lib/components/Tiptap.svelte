@@ -89,9 +89,9 @@
 		font-size: 0.8rem;
 	}
 	:global(.ProseMirror h1) {
-		font-size: 1rem;
+		font-size: 1.1rem;
 		font-weight: bold;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.75rem;
 	}
 	:global(.ProseMirror code) {
 		background-color: rgba(97, 97, 97, 0.1);
