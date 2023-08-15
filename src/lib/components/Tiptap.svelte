@@ -10,15 +10,23 @@
 	import python from 'highlight.js/lib/languages/python';
 	import 'highlight.js/styles/github-dark.css';
 	import { lowlight } from 'lowlight';
+	import Document from '@tiptap/extension-document';
+	import Placeholder from '@tiptap/extension-placeholder';
+	import Typography from '@tiptap/extension-typography';
+	import FloatingMenu from '@tiptap/extension-floating-menu';
 
 	let element: HTMLDivElement;
 	let editor: Editor;
+	let initialContent: string = '<h1>would preserve</h1>';
 
 	lowlight.registerLanguage('html', html);
 	lowlight.registerLanguage('css', css);
 	lowlight.registerLanguage('js', js);
 	lowlight.registerLanguage('ts', ts);
 	lowlight.registerLanguage('python', python);
+
+	// TODO:
+	// $: console.log('content', editor?.getHTML());
 
 	const CodeBlockExtension = CodeBlockLowlight.extend({
 		addKeyboardShortcuts() {
@@ -35,15 +43,32 @@
 		lowlight
 	});
 
+	const CustomDocument = Document.extend({
+		content: 'heading block*'
+	});
+
 	onMount(() => {
 		editor = new Editor({
 			element,
-			extensions: [StarterKit, CodeBlockExtension],
-			content: `
-        <p>
-          That’s a boring paragraph followed by a fenced code block:
-        </p>
-        <pre><code class="language-typescript">console.log('Hello world!');</code></pre>`,
+			extensions: [
+				CustomDocument,
+				StarterKit.configure({
+					document: false
+				}),
+				CodeBlockExtension,
+				Placeholder.configure({
+					placeholder: ({ node }) => {
+						if (node.type.name === 'heading') {
+							return 'What’s the title?';
+						}
+					}
+				}),
+				Typography,
+				FloatingMenu.configure({
+					element: document.querySelector('.floating-menu')
+				})
+			],
+			content: initialContent,
 			onTransaction: () => {
 				editor = editor; // force re-render
 			}
@@ -58,15 +83,15 @@
 </script>
 
 <div class="rounded-lg bg-base-200 p-2 outline-none">
-	{#if editor}
-		<div class="mb-4">
-			<button
-				on:click={() => editor.chain().focus().toggleCodeBlock().run()}
-				class="btn-secondary btn-xs btn {editor.isActive('codeBlock') ? 'is-active' : ''}">
-				code block
-			</button>
-		</div>
-	{/if}
+	<div class="floating-menu ml-2">
+		<button
+			on:click={() => editor?.chain().focus().toggleCodeBlock().run()}
+			class="btn-secondary btn-outline btn-xs btn {editor?.isActive('codeBlock')
+				? 'is-active'
+				: ''}">
+			code block
+		</button>
+	</div>
 
 	<div bind:this={element} />
 </div>
