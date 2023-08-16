@@ -117,7 +117,7 @@
 	});
 </script>
 
-<div class="relative rounded-lg bg-base-200 p-3 outline-none">
+<div class="relative rounded-lg border border-base-content/20 px-3 py-4">
 	<div class="floating-menu ml-2 opacity-70">
 		<button
 			on:click={() => editor?.chain().focus().toggleCodeBlock().run()}
