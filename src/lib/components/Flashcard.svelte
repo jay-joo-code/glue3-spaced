@@ -64,7 +64,6 @@
 
 	const incrementDue = async (days: number) => {
 		const due = add(new Date(), { days });
-		console.log('due', due);
 		const { error } = await supabase.from('flashcard').update({ due }).eq('id', flashcard?.id);
 		if (error) toast.push('An error has occured with updating due date');
 		else {
