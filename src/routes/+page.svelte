@@ -38,7 +38,7 @@
 				{/each}
 			</div>
 
-			<h2 class="mt-8 text-3xl font-extrabold">Upcoming</h2>
+			<h2 class="mt-10 text-3xl font-extrabold">Upcoming</h2>
 			<div class="mt-6 space-y-4">
 				{#each upcomingFlashcards as flashcard (flashcard?.id)}
 					<Flashcard {flashcard} />
