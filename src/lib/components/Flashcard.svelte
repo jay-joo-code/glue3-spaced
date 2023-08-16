@@ -100,6 +100,13 @@
 			onTransaction: () => {
 				editor = editor; // force re-render
 				debouncedUpdateFlashcard();
+			},
+			onBlur: async ({ editor }) => {
+				if (editor?.getText()?.trim()?.length === 0) {
+					const { error } = await supabase.from('flashcard').delete().eq('id', flashcard?.id);
+					if (error) toast.push('An error occurred with auto deleting an empty card');
+					else invalidateAll();
+				}
 			}
 		});
 	});
@@ -151,7 +158,11 @@
 		</div>
 	</div>
 
-	<div bind:this={element} />
+	<!-- direct parent div required for keyboard navigation, focus handling -->
+	<div>
+		<div bind:this={element} />
+	</div>
+
 	<div class="mt-4">
 		<p class="text-xs text-base-content/70">
 			Due in {formatDistanceToNowStrict(new Date(flashcard?.due))} • Created {formatDistanceToNowStrict(
