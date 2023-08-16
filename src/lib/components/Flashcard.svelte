@@ -178,6 +178,7 @@
 	:global(.ProseMirror ul),
 	:global(.ProseMirror ol) {
 		padding: 0 1rem;
+		list-style: disc;
 	}
 	:global(.ProseMirror h1),
 	:global(.ProseMirror h2),
