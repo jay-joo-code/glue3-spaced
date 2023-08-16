@@ -14,10 +14,20 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Typography from '@tiptap/extension-typography';
 	import FloatingMenu from '@tiptap/extension-floating-menu';
+	import { debounce } from 'debounce';
+	import { toast } from '@zerodevx/svelte-toast';
+	import { page } from '$app/stores';
+	import { add, format, formatDistanceToNowStrict } from 'date-fns';
+	import IconCheckOutlined from '$lib/icons/glue/IconCheckOutlined.svelte';
+	import IconAdd from '$lib/icons/glue/IconAdd.svelte';
+	import { invalidateAll } from '$app/navigation';
+
+	export let flashcard;
 
 	let element: HTMLDivElement;
 	let editor: Editor;
-	let initialContent: string = '<h1>would preserve</h1>';
+
+	$: ({ supabase } = $page.data);
 
 	lowlight.registerLanguage('html', html);
 	lowlight.registerLanguage('css', css);
@@ -25,8 +35,14 @@
 	lowlight.registerLanguage('ts', ts);
 	lowlight.registerLanguage('python', python);
 
-	// TODO:
-	// $: console.log('content', editor?.getHTML());
+	const debouncedUpdateFlashcard = debounce(async () => {
+		const { error } = await supabase
+			.from('flashcard')
+			.update({ body: editor.getHTML() })
+			.eq('id', flashcard?.id);
+
+		if (error) toast.push('An error has occured while auto-saving the flashcard');
+	}, 500);
 
 	const CodeBlockExtension = CodeBlockLowlight.extend({
 		addKeyboardShortcuts() {
@@ -47,13 +63,25 @@
 		content: 'heading block*'
 	});
 
+	const incrementDue = async (days: number) => {
+		const due = add(new Date(), { days });
+		console.log('due', due);
+		const { error } = await supabase.from('flashcard').update({ due }).eq('id', flashcard?.id);
+		if (error) toast.push('An error has occured with updating due date');
+		else {
+			await invalidateAll();
+			toast.push(`Updated due date to ${format(due, 'MM/dd iii')}`);
+		}
+	};
+
 	onMount(() => {
 		editor = new Editor({
 			element,
 			extensions: [
 				CustomDocument,
 				StarterKit.configure({
-					document: false
+					document: false,
+					codeBlock: false
 				}),
 				CodeBlockExtension,
 				Placeholder.configure({
@@ -68,9 +96,10 @@
 					element: document.querySelector('.floating-menu')
 				})
 			],
-			content: initialContent,
+			content: flashcard?.body,
 			onTransaction: () => {
 				editor = editor; // force re-render
+				debouncedUpdateFlashcard();
 			}
 		});
 	});
@@ -82,8 +111,8 @@
 	});
 </script>
 
-<div class="rounded-lg bg-base-200 p-2 outline-none">
-	<div class="floating-menu ml-2">
+<div class="relative rounded-lg bg-base-200 p-3 outline-none">
+	<div class="floating-menu ml-2 opacity-70">
 		<button
 			on:click={() => editor?.chain().focus().toggleCodeBlock().run()}
 			class="btn-secondary btn-outline btn-xs btn {editor?.isActive('codeBlock')
@@ -93,7 +122,43 @@
 		</button>
 	</div>
 
+	<div class="absolute right-2 top-2 z-[1]">
+		<div class="dropdown-left dropdown">
+			<label tabindex="0" class="btn-secondary btn-xs btn m-1 text-lg"><IconCheckOutlined /></label>
+
+			<ul
+				tabindex="0"
+				class="dropdown-content menu rounded-box z-[2] bg-base-100 p-2 text-end shadow">
+				<li
+					on:click={() => {
+						incrementDue(3);
+					}}>
+					<a>+3</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementDue(10);
+					}}>
+					<a>+10</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementDue(30);
+					}}>
+					<a>+30</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
 	<div bind:this={element} />
+	<div class="mt-4">
+		<p class="text-xs text-base-content/70">
+			Due in {formatDistanceToNowStrict(new Date(flashcard?.due))} • Created {formatDistanceToNowStrict(
+				new Date(flashcard?.createdAt)
+			)} ago
+		</p>
+	</div>
 </div>
 
 <style>
@@ -117,6 +182,9 @@
 		font-size: 1.1rem;
 		font-weight: bold;
 		margin-bottom: 0.75rem;
+	}
+	:global(.ProseMirror p) {
+		opacity: 0.9;
 	}
 	:global(.ProseMirror code) {
 		background-color: rgba(97, 97, 97, 0.1);
