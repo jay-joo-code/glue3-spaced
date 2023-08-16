@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
+	import IconCheckOutlined from '$lib/icons/glue/IconCheckOutlined.svelte';
 	import { Editor } from '@tiptap/core';
-	import StarterKit from '@tiptap/starter-kit';
 	import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
-	import css from 'highlight.js/lib/languages/css';
-	import js from 'highlight.js/lib/languages/javascript';
-	import ts from 'highlight.js/lib/languages/typescript';
-	import html from 'highlight.js/lib/languages/xml';
-	import python from 'highlight.js/lib/languages/python';
-	import 'highlight.js/styles/github-dark.css';
-	import { lowlight } from 'lowlight';
 	import Document from '@tiptap/extension-document';
+	import FloatingMenu from '@tiptap/extension-floating-menu';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Typography from '@tiptap/extension-typography';
-	import FloatingMenu from '@tiptap/extension-floating-menu';
-	import { debounce } from 'debounce';
+	import StarterKit from '@tiptap/starter-kit';
 	import { toast } from '@zerodevx/svelte-toast';
-	import { page } from '$app/stores';
 	import { add, format, formatDistanceToNowStrict } from 'date-fns';
-	import IconCheckOutlined from '$lib/icons/glue/IconCheckOutlined.svelte';
-	import IconAdd from '$lib/icons/glue/IconAdd.svelte';
-	import { invalidateAll } from '$app/navigation';
+	import debounce from 'debounce';
+	import css from 'highlight.js/lib/languages/css';
+	import js from 'highlight.js/lib/languages/javascript';
+	import python from 'highlight.js/lib/languages/python';
+	import ts from 'highlight.js/lib/languages/typescript';
+	import html from 'highlight.js/lib/languages/xml';
+	import 'highlight.js/styles/github-dark.css';
+	import { lowlight } from 'lowlight';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let flashcard;
 
@@ -35,7 +34,7 @@
 	lowlight.registerLanguage('ts', ts);
 	lowlight.registerLanguage('python', python);
 
-	const debouncedUpdateFlashcard = debounce(async () => {
+	const debouncedUpdateFlashcard = debounce.debounce(async () => {
 		const { error } = await supabase
 			.from('flashcard')
 			.update({ body: editor.getHTML() })
