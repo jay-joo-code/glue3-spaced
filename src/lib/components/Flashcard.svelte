@@ -12,11 +12,6 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import { add, format, formatDistanceToNowStrict } from 'date-fns';
 	import debounce from 'debounce';
-	import css from 'highlight.js/lib/languages/css';
-	import js from 'highlight.js/lib/languages/javascript';
-	import python from 'highlight.js/lib/languages/python';
-	import ts from 'highlight.js/lib/languages/typescript';
-	import html from 'highlight.js/lib/languages/xml';
 	import 'highlight.js/styles/github-dark.css';
 	import { lowlight } from 'lowlight';
 	import { onDestroy, onMount } from 'svelte';
@@ -27,12 +22,6 @@
 	let editor: Editor;
 
 	$: ({ supabase } = $page.data);
-
-	lowlight.registerLanguage('html', html);
-	lowlight.registerLanguage('css', css);
-	lowlight.registerLanguage('js', js);
-	lowlight.registerLanguage('ts', ts);
-	lowlight.registerLanguage('python', python);
 
 	const debouncedUpdateFlashcard = debounce.debounce(async () => {
 		const { error } = await supabase
