@@ -186,8 +186,8 @@
 		opacity: 0.9;
 	}
 	:global(.ProseMirror code) {
-		background-color: rgba(97, 97, 97, 0.1);
-		color: #616161;
+		background-color: hsl(var(--b3));
+		color: hsl(var(--er));
 	}
 	:global(.ProseMirror pre) {
 		background: #0d0d0d;
