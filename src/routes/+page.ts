@@ -17,7 +17,8 @@ export const load: Load = async ({ parent }) => {
 			.from('flashcard')
 			.select('*')
 			.gt('due', new Date().toISOString())
-			.order('due', { ascending: true });
+			.order('due', { ascending: true })
+			.limit(8);
 		return flashcards;
 	};
 

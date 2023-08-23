@@ -39,10 +39,11 @@
 			</div>
 
 			<h2 class="mt-10 text-3xl font-extrabold">Upcoming</h2>
-			<div class="mt-6 space-y-4">
+			<div class="relative mt-6 space-y-4">
 				{#each upcomingFlashcards as flashcard (flashcard?.id)}
 					<Flashcard {flashcard} />
 				{/each}
+				<div class="absolute bottom-0 w-full bg-gradient-to-t from-base-100 pt-64" />
 			</div>
 		</div>
 	</div>
