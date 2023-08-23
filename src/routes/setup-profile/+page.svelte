@@ -57,8 +57,7 @@
 			.from('profiles')
 			.upsert({
 				id: data?.session?.user?.id,
-				name,
-				avatarUrl: avatarUrl
+				name
 			})
 			.single();
 

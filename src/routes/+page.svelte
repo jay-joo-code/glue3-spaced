@@ -10,17 +10,18 @@
 	let searchResultCards = [];
 	let isAddCardLoading = false;
 
-	$: ({ todayFlashcards, upcomingFlashcards, supabase } = $page.data);
+	$: ({ todayFlashcards, upcomingFlashcards, supabase, session } = $page.data);
 
 	const addCard = async () => {
 		isAddCardLoading = true;
 		const { error } = await supabase
-			.from('flashcard')
+			.from('flashcards')
 			.insert([
 				{
 					body: '',
 					due: new Date(),
-					prevSpace: 0
+					prevSpace: 0,
+					userId: session?.user?.id
 				}
 			])
 			.select();
@@ -31,7 +32,7 @@
 
 	const fetchSearchResults = async () => {
 		const { data, error } = await supabase
-			.from('flashcard')
+			.from('flashcards')
 			.select()
 			.textSearch('body', searchQuery, {
 				config: 'english'

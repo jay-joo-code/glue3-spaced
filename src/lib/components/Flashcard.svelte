@@ -25,7 +25,7 @@
 
 	const debouncedUpdateFlashcard = debounce.debounce(async () => {
 		const { error } = await supabase
-			.from('flashcard')
+			.from('flashcards')
 			.update({ body: editor.getHTML() })
 			.eq('id', flashcard?.id);
 
@@ -53,7 +53,7 @@
 
 	const incrementDue = async (days: number) => {
 		const due = add(new Date(), { days });
-		const { error } = await supabase.from('flashcard').update({ due }).eq('id', flashcard?.id);
+		const { error } = await supabase.from('flashcards').update({ due }).eq('id', flashcard?.id);
 		if (error) toast.push('An error has occured with updating due date');
 		else {
 			await invalidateAll();
@@ -90,7 +90,7 @@
 			},
 			onBlur: async ({ editor }) => {
 				if (editor?.getText()?.trim()?.length === 0) {
-					const { error } = await supabase.from('flashcard').delete().eq('id', flashcard?.id);
+					const { error } = await supabase.from('flashcards').delete().eq('id', flashcard?.id);
 					if (error) toast.push('An error occurred with auto deleting an empty card');
 					else invalidateAll();
 				}

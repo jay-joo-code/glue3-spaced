@@ -4,7 +4,7 @@ export const load: Load = async ({ parent }) => {
 	const fetchTodayFlashcards = async () => {
 		const { supabase } = await parent();
 		const { data: flashcards } = await supabase
-			.from('flashcard')
+			.from('flashcards')
 			.select('*')
 			.lte('due', new Date().toISOString())
 			.order('createdAt', { ascending: false });
@@ -14,7 +14,7 @@ export const load: Load = async ({ parent }) => {
 	const fetchUpcomingFlashcards = async () => {
 		const { supabase } = await parent();
 		const { data: flashcards } = await supabase
-			.from('flashcard')
+			.from('flashcards')
 			.select('*')
 			.gt('due', new Date().toISOString())
 			.order('due', { ascending: true })
