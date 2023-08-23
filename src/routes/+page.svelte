@@ -8,10 +8,12 @@
 
 	let searchQuery = '';
 	let searchResultCards = [];
+	let isAddCardLoading = false;
 
 	$: ({ todayFlashcards, upcomingFlashcards, supabase } = $page.data);
 
 	const addCard = async () => {
+		isAddCardLoading = true;
 		const { error } = await supabase
 			.from('flashcard')
 			.insert([
@@ -23,7 +25,8 @@
 			])
 			.select();
 		if (error) toast.push('There was an error with creating a flashcard');
-		else invalidateAll();
+		else await invalidateAll();
+		isAddCardLoading = false;
 	};
 
 	const fetchSearchResults = async () => {
@@ -70,7 +73,14 @@
 			{:else}
 				<div class="mt-8 flex items-center justify-between">
 					<h2 class="text-3xl font-extrabold">Today</h2>
-					<button class="btn-secondary btn-sm btn" on:click={addCard}><IconAdd /> Add card</button>
+					<button class="btn-secondary btn-sm btn" on:click={addCard} disabled={isAddCardLoading}>
+						{#if isAddCardLoading}
+							<span class="loading loading-spinner loading-xs" />
+						{:else}
+							<IconAdd />
+						{/if}
+						Add card
+					</button>
 				</div>
 
 				<div class="mt-6 space-y-4">
