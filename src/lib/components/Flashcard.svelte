@@ -162,6 +162,7 @@
 <style>
 	:global(.ProseMirror) {
 		outline: none;
+		word-break: break-word;
 	}
 	:global(.ProseMirror ul),
 	:global(.ProseMirror ol) {
