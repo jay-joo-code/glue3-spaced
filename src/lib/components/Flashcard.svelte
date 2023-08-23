@@ -177,6 +177,7 @@
 	}
 	:global(.ProseMirror p) {
 		opacity: 0.9;
+		font-size: 1rem;
 	}
 	:global(.ProseMirror code) {
 		background-color: hsl(var(--b3));
