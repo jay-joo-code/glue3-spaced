@@ -169,16 +169,8 @@
 		padding: 0 1rem;
 		list-style: disc;
 	}
-	:global(.ProseMirror h1),
-	:global(.ProseMirror h2),
-	:global(.ProseMirror h3),
-	:global(.ProseMirror h4),
-	:global(.ProseMirror h5),
-	:global(.ProseMirror h6) {
-		line-height: 1.1;
-		font-size: 0.8rem;
-	}
 	:global(.ProseMirror h1) {
+		line-height: 1.3;
 		font-size: 1.3rem;
 		font-weight: bold;
 		margin-bottom: 1rem;
