@@ -30,6 +30,7 @@
 			.eq('id', flashcard?.id);
 
 		if (error) toast.push('An error has occured while auto-saving the flashcard');
+		else invalidateAll();
 	}, 500);
 
 	const CodeBlockExtension = CodeBlockLowlight.extend({
