@@ -5,10 +5,12 @@
 	import IconAdd from '$lib/icons/glue/IconAdd.svelte';
 	import { toast } from '@zerodevx/svelte-toast';
 	import { invalidateAll } from '$app/navigation';
+	import { shortcut } from '$lib/actions/shortcut';
 
 	let searchQuery = '';
 	let searchResultCards = [];
 	let isAddCardLoading = false;
+	let inputElement;
 
 	$: ({ todayFlashcards, upcomingFlashcards, supabase, session } = $page.data);
 
@@ -60,7 +62,15 @@
 					placeholder="Search for a card"
 					class="input input-sm w-full"
 					bind:value={searchQuery}
-					on:input={resetSearchResults} />
+					on:input={resetSearchResults}
+					bind:this={inputElement}
+					use:shortcut={{
+						control: true,
+						code: 'KeyK',
+						callback: () => {
+							inputElement.focus();
+						}
+					}} />
 				<button class="btn-secondary btn-sm btn rounded-full">Search</button>
 			</form>
 
