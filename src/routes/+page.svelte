@@ -34,9 +34,8 @@
 		const { data, error } = await supabase
 			.from('flashcards')
 			.select()
-			.textSearch('body', searchQuery, {
-				config: 'english'
-			});
+			.textSearch('body', `'${searchQuery}'`);
+
 		if (error) toast.push('There was an error with search for flashcards');
 		else {
 			searchResultCards = data;
