@@ -62,6 +62,11 @@
 		}
 	};
 
+	const incrementRandomDue = (min: number, max: number) => {
+		const days = Math.round(Math.random() * (max - min)) + min;
+		incrementDue(days);
+	};
+
 	onMount(() => {
 		editor = new Editor({
 			element,
@@ -126,21 +131,27 @@
 				class="dropdown-content menu rounded-box z-[2] bg-base-100 p-2 text-end shadow">
 				<li
 					on:click={() => {
-						incrementDue(3);
+						incrementRandomDue(2, 4);
 					}}>
-					<a>+3</a>
+					<a>+2~4</a>
 				</li>
 				<li
 					on:click={() => {
-						incrementDue(10);
+						incrementRandomDue(8, 10);
 					}}>
-					<a>+10</a>
+					<a>+8~10</a>
 				</li>
 				<li
 					on:click={() => {
-						incrementDue(30);
+						incrementRandomDue(20, 22);
 					}}>
-					<a>+30</a>
+					<a>+20~22</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementRandomDue(30, 32);
+					}}>
+					<a>+30~32</a>
 				</li>
 			</ul>
 		</div>
