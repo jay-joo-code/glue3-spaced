@@ -11,6 +11,7 @@
 	let searchResultCards = [];
 	let isAddCardLoading = false;
 	let inputElement;
+	let timer;
 
 	$: ({ todayFlashcards, upcomingFlashcards, supabase, session } = $page.data);
 
@@ -32,11 +33,11 @@
 		isAddCardLoading = false;
 	};
 
-	const fetchSearchResults = async () => {
+	const fetchSearchResults = async (query: string) => {
 		const { data, error } = await supabase
 			.from('flashcards')
 			.select()
-			.textSearch('body', `'${searchQuery}'`);
+			.textSearch('body', `'${query}'`);
 
 		if (error) toast.push('There was an error with search for flashcards');
 		else {
@@ -49,30 +50,40 @@
 			searchResultCards = [];
 		}
 	};
+
+	const handleDebouncedInputChange = (query: string) => {
+		clearTimeout(timer);
+
+		timer = setTimeout(() => {
+			searchQuery = query;
+			fetchSearchResults(query);
+		}, 500);
+	};
 </script>
 
 <PageContainer title="Home" layout="mobile-only">
 	<div class="flex w-full justify-center">
 		<div class="w-full max-w-3xl">
-			<form
-				class="flex items-center rounded-full border border-base-content/20 p-2"
-				on:submit={fetchSearchResults}>
-				<input
-					type="text"
-					placeholder="Search for a card"
-					class="input input-sm w-full"
-					bind:value={searchQuery}
-					on:input={resetSearchResults}
-					bind:this={inputElement}
-					use:shortcut={{
-						control: true,
-						code: 'KeyK',
-						callback: () => {
-							inputElement.focus();
-						}
-					}} />
-				<button class="btn-secondary btn-sm btn rounded-full">Search</button>
-			</form>
+			<input
+				type="text"
+				placeholder="Search for a card"
+				class="input-bordered input input-md w-full rounded-full"
+				bind:this={inputElement}
+				on:keyup={(event) => {
+					const query = event?.target?.value?.trim();
+					if (query) handleDebouncedInputChange(query);
+					else {
+						resetSearchResults();
+						searchQuery = '';
+					}
+				}}
+				use:shortcut={{
+					control: true,
+					code: 'KeyK',
+					callback: () => {
+						inputElement.focus();
+					}
+				}} />
 
 			{#if searchQuery?.length > 0}
 				<div class="mt-6 space-y-4">
