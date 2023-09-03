@@ -137,9 +137,15 @@
 				</li>
 				<li
 					on:click={() => {
-						incrementRandomDue(8, 10);
+						incrementRandomDue(6, 8);
 					}}>
-					<a>+8~10</a>
+					<a>+6~8</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementRandomDue(13, 15);
+					}}>
+					<a>+13~15</a>
 				</li>
 				<li
 					on:click={() => {
@@ -149,9 +155,9 @@
 				</li>
 				<li
 					on:click={() => {
-						incrementRandomDue(30, 32);
+						incrementRandomDue(27, 29);
 					}}>
-					<a>+30~32</a>
+					<a>+27~29</a>
 				</li>
 			</ul>
 		</div>
