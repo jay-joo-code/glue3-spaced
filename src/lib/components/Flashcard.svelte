@@ -15,6 +15,7 @@
 	import 'highlight.js/styles/github-dark.css';
 	import { lowlight } from 'lowlight';
 	import { onDestroy, onMount } from 'svelte';
+	import Link from '@tiptap/extension-link';
 
 	export let flashcard;
 
@@ -87,7 +88,8 @@
 				Typography,
 				FloatingMenu.configure({
 					element: document.querySelector('.floating-menu')
-				})
+				}),
+				Link
 			],
 			content: flashcard?.body,
 			onTransaction: () => {
@@ -196,6 +198,10 @@
 	:global(.ProseMirror p) {
 		opacity: 0.9;
 		font-size: 1rem;
+	}
+	:global(.ProseMirror a) {
+		text-decoration: underline;
+		cursor: pointer;
 	}
 	:global(.ProseMirror code) {
 		background-color: hsl(var(--b3));
