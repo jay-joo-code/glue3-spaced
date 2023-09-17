@@ -195,6 +195,10 @@
 		font-weight: bold;
 		margin-bottom: 1rem;
 	}
+	:global(.ProseMirror h2) {
+		font-weight: bold;
+		margin-bottom: 0.2rem;
+	}
 	:global(.ProseMirror p) {
 		opacity: 0.9;
 		font-size: 1rem;
