@@ -25,13 +25,15 @@
 	$: ({ supabase } = $page.data);
 
 	const debouncedUpdateFlashcard = debounce.debounce(async () => {
-		const { error } = await supabase
-			.from('flashcards')
-			.update({ body: editor.getHTML() })
-			.eq('id', flashcard?.id);
+		if (flashcard?.body !== editor.getHTML()) {
+			const { error } = await supabase
+				.from('flashcards')
+				.update({ body: editor.getHTML() })
+				.eq('id', flashcard?.id);
 
-		if (error) toast.push('An error has occured while auto-saving the flashcard');
-		else invalidateAll();
+			if (error) toast.push('An error has occured while auto-saving the flashcard');
+			else invalidateAll();
+		}
 	}, 500);
 
 	const CodeBlockExtension = CodeBlockLowlight.extend({
