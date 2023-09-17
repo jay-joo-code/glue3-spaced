@@ -6,12 +6,14 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import { invalidateAll } from '$app/navigation';
 	import { shortcut } from '$lib/actions/shortcut';
+	import { writable } from 'svelte/store';
 
 	let searchQuery = '';
 	let searchResultCards = [];
 	let isAddCardLoading = false;
 	let inputElement;
 	let timer;
+	let isHideCards = false;
 
 	$: ({ todayFlashcards, upcomingFlashcards, supabase, session } = $page.data);
 
@@ -94,7 +96,14 @@
 				</div>
 			{:else}
 				<div class="mt-8 flex items-center justify-between">
-					<h2 class="text-3xl font-extrabold">Today</h2>
+					<div class="flex items-center">
+						<h2 class="text-3xl font-extrabold">Today</h2>
+						<input
+							type="checkbox"
+							class="toggle-success toggle toggle-sm ml-5 mt-2"
+							bind:checked={isHideCards} />
+						<p class="ml-2 mt-2 text-xs text-base-content/80">Hide existing cards</p>
+					</div>
 					<button class="btn-secondary btn-sm btn" on:click={addCard} disabled={isAddCardLoading}>
 						{#if isAddCardLoading}
 							<span class="loading loading-spinner loading-xs" />
@@ -105,19 +114,21 @@
 					</button>
 				</div>
 
-				<div class="mt-6 space-y-4">
-					{#each todayFlashcards as flashcard (flashcard?.id)}
-						<Flashcard {flashcard} />
-					{/each}
-				</div>
+				{#if !isHideCards}
+					<div class="mt-6 space-y-4">
+						{#each todayFlashcards as flashcard (flashcard?.id)}
+							<Flashcard {flashcard} />
+						{/each}
+					</div>
 
-				<h2 class="mt-10 text-3xl font-extrabold">Upcoming</h2>
-				<div class="relative mt-6 space-y-4">
-					{#each upcomingFlashcards as flashcard (flashcard?.id)}
-						<Flashcard {flashcard} />
-					{/each}
-					<div class="absolute bottom-0 w-full bg-gradient-to-t from-base-100 pt-64" />
-				</div>
+					<h2 class="mt-10 text-3xl font-extrabold">Upcoming</h2>
+					<div class="relative mt-6 space-y-4">
+						{#each upcomingFlashcards as flashcard (flashcard?.id)}
+							<Flashcard {flashcard} />
+						{/each}
+						<div class="absolute bottom-0 w-full bg-gradient-to-t from-base-100 pt-64" />
+					</div>
+				{/if}
 			{/if}
 		</div>
 	</div>
