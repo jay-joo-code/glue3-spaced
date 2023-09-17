@@ -34,10 +34,11 @@
 	};
 
 	const fetchSearchResults = async (query: string) => {
+		const searchQuery = `'${query?.split(' ')?.join("' & '")}'`;
 		const { data, error } = await supabase
 			.from('flashcards')
 			.select()
-			.textSearch('body', `'${query}'`);
+			.textSearch('body', searchQuery);
 
 		if (error) toast.push('There was an error with search for flashcards');
 		else {
