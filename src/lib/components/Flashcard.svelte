@@ -19,10 +19,15 @@
 
 	export let flashcard;
 
+	const COLLAPSE_HEIGHT = 300;
+
 	let element: HTMLDivElement;
 	let editor: Editor;
+	let isExpandToggled = false;
+	let flashcardHeight: number;
 
 	$: ({ supabase } = $page.data);
+	$: isExpanded = flashcardHeight < COLLAPSE_HEIGHT || isExpandToggled;
 
 	const debouncedUpdateFlashcard = debounce.debounce(async () => {
 		if (flashcard?.body !== editor.getHTML()) {
@@ -104,6 +109,10 @@
 					if (error) toast.push('An error occurred with auto deleting an empty card');
 					else invalidateAll();
 				}
+				isExpandToggled = false;
+			},
+			onFocus: () => {
+				isExpandToggled = true;
 			}
 		});
 	});
@@ -115,7 +124,13 @@
 	});
 </script>
 
-<div class="relative rounded-lg border border-base-content/20 px-3 py-4">
+<div
+	class="relative rounded-lg border border-base-content/20 px-3 py-4 {!isExpanded &&
+		`max-h-[${COLLAPSE_HEIGHT + 5}px] overflow-hidden`}"
+	bind:clientHeight={flashcardHeight}>
+	{#if !isExpanded}
+		<div class="absolute inset-x-0 bottom-0 z-10 h-24 w-full bg-gradient-to-t from-base-100" />
+	{/if}
 	<div class="floating-menu ml-2 opacity-70">
 		<button
 			on:click={() => editor?.chain().focus().toggleCodeBlock().run()}
