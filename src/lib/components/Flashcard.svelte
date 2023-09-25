@@ -19,15 +19,13 @@
 
 	export let flashcard;
 
-	const COLLAPSE_HEIGHT = 300;
-
 	let element: HTMLDivElement;
 	let editor: Editor;
 	let isExpandToggled = false;
 	let flashcardHeight: number;
 
 	$: ({ supabase } = $page.data);
-	$: isExpanded = flashcardHeight < COLLAPSE_HEIGHT || isExpandToggled;
+	$: isExpanded = flashcardHeight < 600 || isExpandToggled;
 
 	const debouncedUpdateFlashcard = debounce.debounce(async () => {
 		if (flashcard?.body !== editor.getHTML()) {
@@ -126,7 +124,7 @@
 
 <div
 	class=" {!isExpanded &&
-		'max-h-[305px] overflow-hidden'} relative rounded-lg border border-base-content/20 px-3 py-4"
+		'max-h-[605px] overflow-hidden'} relative rounded-lg border border-base-content/20 px-3 py-4"
 	bind:clientHeight={flashcardHeight}>
 	{#if !isExpanded}
 		<div class="absolute inset-x-0 bottom-0 z-10 h-24 w-full bg-gradient-to-t from-base-100" />
