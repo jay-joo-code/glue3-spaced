@@ -20,7 +20,6 @@
 	export let flashcard;
 
 	const COLLAPSE_HEIGHT = 300;
-	const COLLAPSE_CLASS = `max-h-[${COLLAPSE_HEIGHT + 5}px] overflow-hidden`;
 
 	let element: HTMLDivElement;
 	let editor: Editor;
@@ -126,8 +125,8 @@
 </script>
 
 <div
-	class="relative rounded-lg border border-base-content/20 px-3 py-4 {!isExpanded &&
-		COLLAPSE_CLASS}"
+	class=" {!isExpanded &&
+		'max-h-[305px] overflow-hidden'} relative rounded-lg border border-base-content/20 px-3 py-4"
 	bind:clientHeight={flashcardHeight}>
 	{#if !isExpanded}
 		<div class="absolute inset-x-0 bottom-0 z-10 h-24 w-full bg-gradient-to-t from-base-100" />
