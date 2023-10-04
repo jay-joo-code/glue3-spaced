@@ -64,7 +64,7 @@
 		if (error) toast.push('An error has occured with updating due date');
 		else {
 			await invalidateAll();
-			toast.push(`Updated due date to ${format(due, 'MM/dd iii')}`);
+			toast.push(`Updated due date to ${format(due, 'yyyy/MM/dd iii')}`);
 		}
 	};
 
@@ -174,6 +174,12 @@
 						incrementRandomDue(27, 29);
 					}}>
 					<a>+27~29</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementRandomDue(365, 365);
+					}}>
+					<a>+365</a>
 				</li>
 			</ul>
 		</div>
