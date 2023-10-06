@@ -218,6 +218,7 @@
 	:global(.ProseMirror h2) {
 		font-weight: bold;
 		margin-bottom: 0.2rem;
+		color: hsl(var(--ac));
 	}
 	:global(.ProseMirror p) {
 		opacity: 0.9;

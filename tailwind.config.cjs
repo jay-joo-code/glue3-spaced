@@ -26,7 +26,8 @@ module.exports = {
 					primary: colors.indigo[500],
 					'primary-content': colors.white,
 					secondary: colors.slate[700],
-					'secondary-content': colors.white
+					'secondary-content': colors.white,
+					'accent-content': colors.indigo[800]
 				}
 			},
 			{
@@ -35,7 +36,8 @@ module.exports = {
 					'base-content': '#FCFCFC',
 					primary: colors.indigo[500],
 					secondary: '#FCFCFC',
-					'secondary-content': colors.slate[800]
+					'secondary-content': colors.slate[800],
+					'accent-content': colors.indigo[200]
 				}
 			}
 		]
