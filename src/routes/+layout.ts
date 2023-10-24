@@ -32,9 +32,9 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
 		// profile creation
 		switch (session?.user?.app_metadata?.provider) {
 			case 'email': {
-				// if (url?.pathname !== '/setup-profile') {
-				// 	throw redirect(307, `/setup-profile?${url.searchParams.toString()}`);
-				// }
+				if (url?.pathname !== '/setup-profile') {
+					throw redirect(307, `/setup-profile?${url.searchParams.toString()}`);
+				}
 				return null;
 			}
 
