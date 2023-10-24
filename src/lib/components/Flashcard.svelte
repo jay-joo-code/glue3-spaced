@@ -9,6 +9,10 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Typography from '@tiptap/extension-typography';
 	import StarterKit from '@tiptap/starter-kit';
+	import Table from '@tiptap/extension-table';
+	import TableCell from '@tiptap/extension-table-cell';
+	import TableHeader from '@tiptap/extension-table-header';
+	import TableRow from '@tiptap/extension-table-row';
 	import { toast } from '@zerodevx/svelte-toast';
 	import { add, format, formatDistanceToNowStrict } from 'date-fns';
 	import debounce from 'debounce';
@@ -94,7 +98,13 @@
 				FloatingMenu.configure({
 					element: document.querySelector('.floating-menu')
 				}),
-				Link
+				Link,
+				Table.configure({
+					resizable: true
+				}),
+				TableRow,
+				TableHeader,
+				TableCell
 			],
 			content: flashcard?.body,
 			onTransaction: () => {
@@ -135,6 +145,12 @@
 				? 'is-active'
 				: ''}">
 			code block
+		</button>
+		<button
+			class="btn-secondary btn-outline btn-xs btn"
+			on:click={() =>
+				editor?.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>
+			insertTable
 		</button>
 	</div>
 
@@ -259,5 +275,63 @@
 		border: none;
 		border-top: 2px solid rgba(13, 13, 13, 0.1);
 		margin: 2rem 0;
+	}
+	:global(.ProseMirror table) {
+		border-collapse: collapse;
+		margin: 0;
+		overflow: hidden;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+	:global(.ProseMirror td, th) {
+		border: 1px solid hsl(var(--bc) / 0.3);
+		box-sizing: border-box;
+		min-width: 1em;
+		padding: 3px 5px;
+		position: relative;
+		vertical-align: top;
+		font-size: 0.875rem;
+	}
+
+	:global(.ProseMirror td, th > *) {
+		margin-bottom: 0;
+	}
+
+	:global(.ProseMirror th) {
+		background-color: hsl(var(--b2));
+		font-weight: medium;
+		text-align: left;
+	}
+
+	:global(.ProseMirror p) {
+		margin: 0;
+	}
+
+	:global(.ProseMirror .selectedCell:after) {
+		background: rgba(200, 200, 255, 0.4);
+		content: '';
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		pointer-events: none;
+		position: absolute;
+		z-index: 2;
+	}
+
+	:global(.ProseMirror .column-resize-handle) {
+		background-color: #adf;
+		bottom: -2px;
+		position: absolute;
+		right: -2px;
+		pointer-events: none;
+		top: 0;
+		width: 4px;
+	}
+
+	:global(.ProseMirror .tableWrapper) {
+		padding: 1rem 0;
+		overflow-x: auto;
 	}
 </style>
