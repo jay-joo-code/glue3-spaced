@@ -14,11 +14,18 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
 		serverSession: data.session
 	});
 
-	const {
-		data: { session }
-	} = await supabase.auth.getSession();
+	const fetchSession = async () => {
+		const {
+			data: { session }
+		} = await supabase.auth.getSession();
+		return session;
+	};
 
-	const fetchProfile = async (session) => {
+	const fetchProfile = async () => {
+		const {
+			data: { session }
+		} = await supabase.auth.getSession();
+
 		if (!session) return null;
 
 		const { data: profile } = await supabase
@@ -62,5 +69,9 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
 		}
 	};
 
-	return { supabase, session, profile: fetchProfile(session) };
+	return {
+		supabase,
+		session: fetchSession(),
+		profile: fetchProfile()
+	};
 };
