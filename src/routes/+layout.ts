@@ -2,9 +2,8 @@ import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/publi
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 import type { LayoutLoad } from './$types';
 // import type { Database } from '../DatabaseDefinitions';
-import { redirect } from '@sveltejs/kit';
 
-export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
+export const load: LayoutLoad = async ({ fetch, data, depends }) => {
 	depends('supabase:auth');
 
 	const supabase = createSupabaseLoadClient<Database>({
@@ -36,15 +35,8 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
 
 		if (profile) return profile;
 
-		// profile creation
+		// automatic profile creation with provider data
 		switch (session?.user?.app_metadata?.provider) {
-			case 'email': {
-				if (url?.pathname !== '/setup-profile') {
-					throw redirect(307, `/setup-profile?${url.searchParams.toString()}`);
-				}
-				return null;
-			}
-
 			case 'google': {
 				const { data: profile } = await supabase
 					.from('profiles')
