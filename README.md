@@ -1,6 +1,10 @@
 # Spaced
 
-Spaced is a flashcard app that supports code blocks and spaced repetition. It's a tool to help software engineers (or me specifically) retain information.
+Spaced is a flashcard app that supports spaced repetition, code blocks, keyboard shortcuts.
+
+It's a tool specifically designed to help me retain information.
+
+Feel free to dig around, but you will have a bad user experience, because it's specifically designed for me.
 
 ## Extend Glue root
 
