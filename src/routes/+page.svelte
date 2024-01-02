@@ -6,7 +6,8 @@
 	import { toast } from '@zerodevx/svelte-toast';
 	import { invalidateAll } from '$app/navigation';
 	import { shortcut } from '$lib/actions/shortcut';
-	import { writable } from 'svelte/store';
+	import IconRefresh from '$lib/icons/glue/IconRefresh.svelte';
+	import { add, differenceInDays } from 'date-fns';
 
 	let searchQuery = '';
 	let searchResultCards = [];
@@ -14,6 +15,9 @@
 	let inputElement;
 	let timer;
 	let isHideCards = false;
+	let isResetSpaceLoading = false;
+	let resetFlashcardTotal = 0;
+	let resetFlashcardCurrent = 0;
 
 	$: ({ todayFlashcards, upcomingFlashcards, supabase, session } = $page.data);
 
@@ -62,6 +66,29 @@
 			fetchSearchResults(query);
 		}, 500);
 	};
+
+	const resetSpace = async () => {
+		isResetSpaceLoading = true;
+		resetFlashcardTotal = todayFlashcards?.length || 0;
+		resetFlashcardCurrent = 0;
+
+		try {
+			const lastFlashcard = todayFlashcards[todayFlashcards?.length - 1];
+			const daysDiff = differenceInDays(new Date(), new Date(lastFlashcard?.due)) + 1;
+			for (const flashcard of todayFlashcards) {
+				const newDue = add(new Date(flashcard?.due), { days: daysDiff });
+				await supabase.from('flashcards').update({ due: newDue }).eq('id', flashcard?.id).select();
+				resetFlashcardCurrent += 1;
+			}
+			await invalidateAll();
+		} catch (error) {
+			toast.push('There was an error with resetting spaces');
+		}
+
+		isResetSpaceLoading = false;
+		resetFlashcardTotal = 0;
+		resetFlashcardCurrent = 0;
+	};
 </script>
 
 <PageContainer title="Home" layout="mobile-only">
@@ -104,14 +131,28 @@
 							bind:checked={isHideCards} />
 						<p class="ml-2 mt-2 text-xs text-base-content/80">Hide existing cards</p>
 					</div>
-					<button class="btn-secondary btn-sm btn" on:click={addCard} disabled={isAddCardLoading}>
-						{#if isAddCardLoading}
-							<span class="loading loading-spinner loading-xs" />
-						{:else}
-							<IconAdd />
-						{/if}
-						Add card
-					</button>
+					<div class="flex items-center space-x-2">
+						<button
+							class="btn-ghost btn-sm btn"
+							on:click={resetSpace}
+							disabled={isResetSpaceLoading}>
+							{#if isResetSpaceLoading}
+								<span class="loading loading-spinner loading-xs" />
+								{resetFlashcardCurrent} / {resetFlashcardTotal}
+							{:else}
+								<IconRefresh />
+							{/if}
+							Reset space
+						</button>
+						<button class="btn-secondary btn-sm btn" on:click={addCard} disabled={isAddCardLoading}>
+							{#if isAddCardLoading}
+								<span class="loading loading-spinner loading-xs" />
+							{:else}
+								<IconAdd />
+							{/if}
+							Add card
+						</button>
+					</div>
 				</div>
 
 				{#if !isHideCards}

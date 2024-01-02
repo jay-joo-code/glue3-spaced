@@ -7,7 +7,7 @@ export const load: Load = async ({ parent }) => {
 			.from('flashcards')
 			.select('*')
 			.lte('due', new Date().toISOString())
-			.order('createdAt', { ascending: false });
+			.order('due', { ascending: false });
 		return flashcards;
 	};
 
