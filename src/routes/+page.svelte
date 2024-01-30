@@ -125,11 +125,11 @@
 				<div class="mt-8 flex items-center justify-between">
 					<div class="flex items-center">
 						<h2 class="text-3xl font-extrabold">Today</h2>
-						<input
+						<!-- <input
 							type="checkbox"
 							class="toggle-success toggle toggle-sm ml-5 mt-2"
 							bind:checked={isHideCards} />
-						<p class="ml-2 mt-2 text-xs text-base-content/80">Hide existing cards</p>
+						<p class="ml-2 mt-2 text-xs text-base-content/80">Hide existing cards</p> -->
 					</div>
 					<div class="flex items-center space-x-2">
 						<button
