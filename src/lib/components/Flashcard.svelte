@@ -193,6 +193,18 @@
 				</li>
 				<li
 					on:click={() => {
+						incrementRandomDue(34, 36);
+					}}>
+					<a>+34~36</a>
+				</li>
+				<li
+					on:click={() => {
+						incrementRandomDue(41, 43);
+					}}>
+					<a>+41~43</a>
+				</li>
+				<li
+					on:click={() => {
 						incrementRandomDue(365, 365);
 					}}>
 					<a>+365</a>
